@@ -14,5 +14,3 @@ Feature: User authentication tests
     Then User enter the password as "yas1234"
     When User click on the login button
     Then Login should fail
-
- 
