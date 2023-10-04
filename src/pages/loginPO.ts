@@ -1,16 +1,11 @@
-import { Browser, Locator, Page, chromium, expect } from '@playwright/test';
-
-let browser:Browser;
-let page:Page;
+import { Browser, Locator, Page, expect } from '@playwright/test';
 
     export class loginPO {
-        readonly page :Page;
-        userInput: Locator;
-        passwordInput: Locator;
-        loginBtn: Locator;
+        public page :Page;
+        readonly userInput: Locator;
+        readonly passwordInput: Locator;
+        readonly loginBtn: Locator
         
-       
-    
         constructor(page : Page) {
             this.page=page;
             this.userInput = this.page.locator("input[name='username']");
@@ -19,19 +14,23 @@ let page:Page;
         }   
         
         async goto() {
-            browser = await chromium.launch ({ headless:false });
-            await this.page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
-            await expect(this.page).toHaveTitle(/DEMOQA/);
+            await this.page.goto("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
         }
         
-        async enteruser() {
-            await this.userInput.type("Admin");
+        
+        async filluserName(name: string) {
+            await this.userInput.textContent();
+            await this.userInput.fill(name);
         }
-        async enterpass() {    
-            await this.passwordInput.type("admin123");
+    
+        async fillpassword(password: string) {
+            await this.passwordInput.textContent();
+            await this.passwordInput.fill(password);
         }
-        async login() {    
-            await this.loginBtn.click();
-        }
+
+        async submitBtn() {
+            await this.loginBtn.isEnabled();
+            await this.loginBtn.click({ force: true });
+        } 
     
     }
